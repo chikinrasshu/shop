@@ -1,20 +1,235 @@
 import type { Config } from "tailwindcss";
+import { PluginCreator } from "tailwindcss/types/config";
+
+const chkVariants: PluginCreator = ({ addVariant }) => {
+  addVariant("chk-child", "& > *");
+  addVariant("chk-child-first", "& > *:first-child");
+  addVariant("chk-child-last", "& > *:last-child");
+  addVariant("chk-child-hover", "& > *:hover");
+  addVariant("chk-child-active", "& > *:active");
+  addVariant("chk-child-hactive", ["& > *:hover", "& > *:active"]);
+};
+
+const radixUI: PluginCreator = ({ addVariant }) => {
+  addVariant("rd-on", [
+    "&[data-state=on]",
+    "&[data-state=open]",
+    "&[data-state=active]",
+  ]);
+  addVariant("rd-off", [
+    "&[data-state=off]",
+    "&[data-state=closed]",
+    "&[data-state=inactive]",
+  ]);
+  addVariant("rd-orientation-h", "&[data-orientation=horizontal]");
+  addVariant("rd-orientation-v", "&[data-orientation=vertical]");
+  addVariant("rd-side-l", "&[data-side=left]");
+  addVariant("rd-side-r", "&[data-side=right]");
+  addVariant("rd-side-t", "&[data-side=top]");
+  addVariant("rd-side-b", "&[data-side=bottom]");
+  addVariant("rd-toggle", "& > .toggle");
+};
 
 const config: Config = {
+  darkMode: ["class"],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    colors: {
+      gray: {
+        a: {
+          DEFAULT: "hsl(var(--gray-a5) / <alpha-value>)",
+          1: "hsl(var(--gray-a1) / <alpha-value>)",
+          2: "hsl(var(--gray-a2) / <alpha-value>)",
+          3: "hsl(var(--gray-a3) / <alpha-value>)",
+          4: "hsl(var(--gray-a4) / <alpha-value>)",
+          5: "hsl(var(--gray-a5) / <alpha-value>)",
+          6: "hsl(var(--gray-a6) / <alpha-value>)",
+          7: "hsl(var(--gray-a7) / <alpha-value>)",
+          8: "hsl(var(--gray-a8) / <alpha-value>)",
+          9: "hsl(var(--gray-a9) / <alpha-value>)",
+          10: "hsl(var(--gray-a10) / <alpha-value>)",
+          11: "hsl(var(--gray-a11) / <alpha-value>)",
+          12: "hsl(var(--gray-a12) / <alpha-value>)",
+        },
+        contrast: "hsl(var(--gray-contrast) / <alpha-value>)",
+        surface: "hsl(var(--gray-surface) / <alpha-value>)",
+        indicator: "hsl(var(--gray-indicator) / <alpha-value>)",
+        track: "hsl(var(--gray-track) / <alpha-value>)",
+        DEFAULT: "hsl(var(--gray-5) / <alpha-value>)",
+        1: "hsl(var(--gray-1) / <alpha-value>)",
+        2: "hsl(var(--gray-2) / <alpha-value>)",
+        3: "hsl(var(--gray-3) / <alpha-value>)",
+        4: "hsl(var(--gray-4) / <alpha-value>)",
+        5: "hsl(var(--gray-5) / <alpha-value>)",
+        6: "hsl(var(--gray-6) / <alpha-value>)",
+        7: "hsl(var(--gray-7) / <alpha-value>)",
+        8: "hsl(var(--gray-8) / <alpha-value>)",
+        9: "hsl(var(--gray-9) / <alpha-value>)",
+        10: "hsl(var(--gray-10) / <alpha-value>)",
+        11: "hsl(var(--gray-11) / <alpha-value>)",
+        12: "hsl(var(--gray-12) / <alpha-value>)",
+      },
+      blue: {
+        a: {
+          DEFAULT: "hsl(var(--blue-a5) / <alpha-value>)",
+          1: "hsl(var(--blue-a1) / <alpha-value>)",
+          2: "hsl(var(--blue-a2) / <alpha-value>)",
+          3: "hsl(var(--blue-a3) / <alpha-value>)",
+          4: "hsl(var(--blue-a4) / <alpha-value>)",
+          5: "hsl(var(--blue-a5) / <alpha-value>)",
+          6: "hsl(var(--blue-a6) / <alpha-value>)",
+          7: "hsl(var(--blue-a7) / <alpha-value>)",
+          8: "hsl(var(--blue-a8) / <alpha-value>)",
+          9: "hsl(var(--blue-a9) / <alpha-value>)",
+          10: "hsl(var(--blue-a10) / <alpha-value>)",
+          11: "hsl(var(--blue-a11) / <alpha-value>)",
+          12: "hsl(var(--blue-a12) / <alpha-value>)",
+        },
+        DEFAULT: "hsl(var(--blue-5) / <alpha-value>)",
+        1: "hsl(var(--blue-1) / <alpha-value>)",
+        2: "hsl(var(--blue-2) / <alpha-value>)",
+        3: "hsl(var(--blue-3) / <alpha-value>)",
+        4: "hsl(var(--blue-4) / <alpha-value>)",
+        5: "hsl(var(--blue-5) / <alpha-value>)",
+        6: "hsl(var(--blue-6) / <alpha-value>)",
+        7: "hsl(var(--blue-7) / <alpha-value>)",
+        8: "hsl(var(--blue-8) / <alpha-value>)",
+        9: "hsl(var(--blue-9) / <alpha-value>)",
+        10: "hsl(var(--blue-10) / <alpha-value>)",
+        11: "hsl(var(--blue-11) / <alpha-value>)",
+        12: "hsl(var(--blue-12) / <alpha-value>)",
+      },
+      purple: {
+        a: {
+          DEFAULT: "hsl(var(--purple-a5) / <alpha-value>)",
+          1: "hsl(var(--purple-a1) / <alpha-value>)",
+          2: "hsl(var(--purple-a2) / <alpha-value>)",
+          3: "hsl(var(--purple-a3) / <alpha-value>)",
+          4: "hsl(var(--purple-a4) / <alpha-value>)",
+          5: "hsl(var(--purple-a5) / <alpha-value>)",
+          6: "hsl(var(--purple-a6) / <alpha-value>)",
+          7: "hsl(var(--purple-a7) / <alpha-value>)",
+          8: "hsl(var(--purple-a8) / <alpha-value>)",
+          9: "hsl(var(--purple-a9) / <alpha-value>)",
+          10: "hsl(var(--purple-a10) / <alpha-value>)",
+          11: "hsl(var(--purple-a11) / <alpha-value>)",
+          12: "hsl(var(--purple-a12) / <alpha-value>)",
+        },
+        DEFAULT: "hsl(var(--purple-5) / <alpha-value>)",
+        1: "hsl(var(--purple-1) / <alpha-value>)",
+        2: "hsl(var(--purple-2) / <alpha-value>)",
+        3: "hsl(var(--purple-3) / <alpha-value>)",
+        4: "hsl(var(--purple-4) / <alpha-value>)",
+        5: "hsl(var(--purple-5) / <alpha-value>)",
+        6: "hsl(var(--purple-6) / <alpha-value>)",
+        7: "hsl(var(--purple-7) / <alpha-value>)",
+        8: "hsl(var(--purple-8) / <alpha-value>)",
+        9: "hsl(var(--purple-9) / <alpha-value>)",
+        10: "hsl(var(--purple-10) / <alpha-value>)",
+        11: "hsl(var(--purple-11) / <alpha-value>)",
+        12: "hsl(var(--purple-12) / <alpha-value>)",
+      },
+      green: {
+        a: {
+          DEFAULT: "hsl(var(--green-a5) / <alpha-value>)",
+          1: "hsl(var(--green-a1) / <alpha-value>)",
+          2: "hsl(var(--green-a2) / <alpha-value>)",
+          3: "hsl(var(--green-a3) / <alpha-value>)",
+          4: "hsl(var(--green-a4) / <alpha-value>)",
+          5: "hsl(var(--green-a5) / <alpha-value>)",
+          6: "hsl(var(--green-a6) / <alpha-value>)",
+          7: "hsl(var(--green-a7) / <alpha-value>)",
+          8: "hsl(var(--green-a8) / <alpha-value>)",
+          9: "hsl(var(--green-a9) / <alpha-value>)",
+          10: "hsl(var(--green-a10) / <alpha-value>)",
+          11: "hsl(var(--green-a11) / <alpha-value>)",
+          12: "hsl(var(--green-a12) / <alpha-value>)",
+        },
+        DEFAULT: "hsl(var(--green-5) / <alpha-value>)",
+        1: "hsl(var(--green-1) / <alpha-value>)",
+        2: "hsl(var(--green-2) / <alpha-value>)",
+        3: "hsl(var(--green-3) / <alpha-value>)",
+        4: "hsl(var(--green-4) / <alpha-value>)",
+        5: "hsl(var(--green-5) / <alpha-value>)",
+        6: "hsl(var(--green-6) / <alpha-value>)",
+        7: "hsl(var(--green-7) / <alpha-value>)",
+        8: "hsl(var(--green-8) / <alpha-value>)",
+        9: "hsl(var(--green-9) / <alpha-value>)",
+        10: "hsl(var(--green-10) / <alpha-value>)",
+        11: "hsl(var(--green-11) / <alpha-value>)",
+        12: "hsl(var(--green-12) / <alpha-value>)",
+      },
+      red: {
+        a: {
+          DEFAULT: "hsl(var(--red-a5) / <alpha-value>)",
+          1: "hsl(var(--red-a1) / <alpha-value>)",
+          2: "hsl(var(--red-a2) / <alpha-value>)",
+          3: "hsl(var(--red-a3) / <alpha-value>)",
+          4: "hsl(var(--red-a4) / <alpha-value>)",
+          5: "hsl(var(--red-a5) / <alpha-value>)",
+          6: "hsl(var(--red-a6) / <alpha-value>)",
+          7: "hsl(var(--red-a7) / <alpha-value>)",
+          8: "hsl(var(--red-a8) / <alpha-value>)",
+          9: "hsl(var(--red-a9) / <alpha-value>)",
+          10: "hsl(var(--red-a10) / <alpha-value>)",
+          11: "hsl(var(--red-a11) / <alpha-value>)",
+          12: "hsl(var(--red-a12) / <alpha-value>)",
+        },
+        DEFAULT: "hsl(var(--red-5) / <alpha-value>)",
+        1: "hsl(var(--red-1) / <alpha-value>)",
+        2: "hsl(var(--red-2) / <alpha-value>)",
+        3: "hsl(var(--red-3) / <alpha-value>)",
+        4: "hsl(var(--red-4) / <alpha-value>)",
+        5: "hsl(var(--red-5) / <alpha-value>)",
+        6: "hsl(var(--red-6) / <alpha-value>)",
+        7: "hsl(var(--red-7) / <alpha-value>)",
+        8: "hsl(var(--red-8) / <alpha-value>)",
+        9: "hsl(var(--red-9) / <alpha-value>)",
+        10: "hsl(var(--red-10) / <alpha-value>)",
+        11: "hsl(var(--red-11) / <alpha-value>)",
+        12: "hsl(var(--red-12) / <alpha-value>)",
+      },
+      yellow: {
+        a: {
+          DEFAULT: "hsl(var(--yellow-a5) / <alpha-value>)",
+          1: "hsl(var(--yellow-a1) / <alpha-value>)",
+          2: "hsl(var(--yellow-a2) / <alpha-value>)",
+          3: "hsl(var(--yellow-a3) / <alpha-value>)",
+          4: "hsl(var(--yellow-a4) / <alpha-value>)",
+          5: "hsl(var(--yellow-a5) / <alpha-value>)",
+          6: "hsl(var(--yellow-a6) / <alpha-value>)",
+          7: "hsl(var(--yellow-a7) / <alpha-value>)",
+          8: "hsl(var(--yellow-a8) / <alpha-value>)",
+          9: "hsl(var(--yellow-a9) / <alpha-value>)",
+          10: "hsl(var(--yellow-a10) / <alpha-value>)",
+          11: "hsl(var(--yellow-a11) / <alpha-value>)",
+          12: "hsl(var(--yellow-a12) / <alpha-value>)",
+        },
+        DEFAULT: "hsl(var(--yellow-5) / <alpha-value>)",
+        1: "hsl(var(--yellow-1) / <alpha-value>)",
+        2: "hsl(var(--yellow-2) / <alpha-value>)",
+        3: "hsl(var(--yellow-3) / <alpha-value>)",
+        4: "hsl(var(--yellow-4) / <alpha-value>)",
+        5: "hsl(var(--yellow-5) / <alpha-value>)",
+        6: "hsl(var(--yellow-6) / <alpha-value>)",
+        7: "hsl(var(--yellow-7) / <alpha-value>)",
+        8: "hsl(var(--yellow-8) / <alpha-value>)",
+        9: "hsl(var(--yellow-9) / <alpha-value>)",
+        10: "hsl(var(--yellow-10) / <alpha-value>)",
+        11: "hsl(var(--yellow-11) / <alpha-value>)",
+        12: "hsl(var(--yellow-12) / <alpha-value>)",
+      },
+    },
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      animation: {
+        "spin-steps": "spin 0.5s steps(8, end) infinite",
       },
     },
   },
-  plugins: [],
+  plugins: [chkVariants, radixUI],
 };
 export default config;

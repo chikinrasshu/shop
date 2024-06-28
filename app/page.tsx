@@ -1,113 +1,296 @@
-import Image from "next/image";
+import { Fragment, ReactNode } from "react";
+import { Button, ButtonProps } from "@/components/ui/button";
+import { Toggle } from "@/components/ui/toggle";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  TabsTriggerProps,
+} from "@/components/ui/tab";
+
+function capitalizeFirstLetter(s: string): string {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+function TestButtons() {
+  const kinds: ButtonProps["kind"][] = ["default", "outline", "ghost"];
+  const variants: ButtonProps["variant"][] = [
+    "default",
+    "primary",
+    "secondary",
+    "success",
+    "warning",
+    "failure",
+  ];
+
+  return (
+    <div className="flex flex-col rounded-md border p-2 shadow-md">
+      {kinds.map((kind, j) => (
+        <Fragment key={`Kind_${j}`}>
+          <span className="p-1 text-xl font-semibold">
+            {capitalizeFirstLetter(`${kind!} Buttons`)}
+          </span>
+          <hr className="border-b-1 border-t" />
+          <div className="flex flex-col gap-2 px-2 py-1">
+            <div className="flex gap-1">
+              {variants.map((variant) => (
+                <Button key={variant} variant={variant} kind={kind}>
+                  {variant}
+                </Button>
+              ))}
+            </div>
+            <div className="flex gap-1">
+              {variants.map((variant) => (
+                <Button key={variant} variant={variant} kind={kind} disabled>
+                  {variant}
+                </Button>
+              ))}
+            </div>
+            <div className="flex gap-1">
+              {variants.map((variant) => (
+                <Toggle key={variant} asChild>
+                  <Button variant={variant} kind={kind}>
+                    {variant}
+                  </Button>
+                </Toggle>
+              ))}
+            </div>
+            <div className="flex gap-1">
+              {variants.map((variant) => (
+                <Toggle key={variant} disabled asChild>
+                  <Button variant={variant} kind={kind}>
+                    {variant}
+                  </Button>
+                </Toggle>
+              ))}
+            </div>
+            <div className="flex">
+              {variants.map((variant, i) => {
+                const isFirst = i == 0;
+                const isLast = i == variants.length - 1;
+                const side = isFirst ? "left" : isLast ? "right" : "middle";
+
+                return (
+                  <Button
+                    key={variant}
+                    variant={variant}
+                    side={side}
+                    kind={kind}
+                  >
+                    {variant}
+                  </Button>
+                );
+              })}
+            </div>
+            <div className="flex">
+              {variants.map((variant, i) => {
+                const isFirst = i == 0;
+                const isLast = i == variants.length - 1;
+                const side = isFirst ? "left" : isLast ? "right" : "middle";
+
+                return (
+                  <Button
+                    key={variant}
+                    variant={variant}
+                    side={side}
+                    kind={kind}
+                    disabled
+                  >
+                    {variant}
+                  </Button>
+                );
+              })}
+            </div>
+          </div>
+        </Fragment>
+      ))}
+    </div>
+  );
+}
+
+function TestTabs() {
+  const kinds: ButtonProps["kind"][] = ["default", "outline", "ghost"];
+
+  type TabsProps = {
+    title: string;
+    content: ReactNode;
+  } & TabsTriggerProps;
+
+  const tabs1: TabsProps[] = [
+    {
+      value: "1st",
+      title: "First",
+      content: "Content of First",
+      variant: "default",
+    },
+    {
+      value: "2nd",
+      title: "Second",
+      content: "Content of Second",
+      variant: "primary",
+    },
+    {
+      value: "3rd",
+      title: "Third",
+      content: "Content of Third",
+      variant: "secondary",
+    },
+    {
+      value: "4th",
+      title: "Fourth",
+      content: "Content of Fourth",
+      variant: "success",
+      disabled: true,
+    },
+  ];
+
+  const tabs2: TabsProps[] = [
+    {
+      value: "5th",
+      title: "Fifth",
+      content: "Content of Fifth",
+      variant: "warning",
+    },
+    {
+      value: "6th",
+      title: "Sixth",
+      content: "Content of Sixth",
+      variant: "failure",
+    },
+    {
+      value: "7th",
+      title: "Seventh",
+      content: "Content of Seventh",
+      variant: "primary",
+    },
+    {
+      value: "8th",
+      title: "Eight",
+      content: "Content of Eight",
+      disabled: true,
+    },
+  ];
+
+  return (
+    <div className="flex flex-col rounded-md border p-2 shadow-md">
+      {kinds.map((kind, j) => (
+        <Fragment key={`Kind_${j}`}>
+          <span className="p-1 text-xl font-semibold">
+            {capitalizeFirstLetter(`${kind!} Tabs`)}
+          </span>
+          <hr className="border-b-1 border-t" />
+          <div className="flex flex-wrap gap-1 px-2 py-1">
+            <div className="flex flex-1 gap-2">
+              <Tabs className="flex-1" defaultValue={tabs1[0].value}>
+                <TabsList>
+                  {tabs1.map(({ value, title, ...props }) => (
+                    <TabsTrigger
+                      key={value}
+                      value={value}
+                      kind={kind}
+                      {...props}
+                    >
+                      {title}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+                {tabs1.map(({ value, content, variant }) => (
+                  <TabsContent
+                    key={value}
+                    className="p-1"
+                    value={value}
+                    variant={variant}
+                  >
+                    {content}
+                  </TabsContent>
+                ))}
+              </Tabs>
+
+              <Tabs
+                className="flex-1"
+                orientation="vertical"
+                defaultValue={tabs2[0].value}
+              >
+                <TabsList>
+                  {tabs2.map(({ value, title, ...props }) => (
+                    <TabsTrigger
+                      key={value}
+                      value={value}
+                      kind={kind}
+                      {...props}
+                    >
+                      {title}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+                {tabs2.map(({ value, content, variant }) => (
+                  <TabsContent
+                    key={value}
+                    className="p-1"
+                    value={value}
+                    variant={variant}
+                  >
+                    {content}
+                  </TabsContent>
+                ))}
+              </Tabs>
+            </div>
+          </div>
+        </Fragment>
+      ))}
+    </div>
+  );
+}
+
+function TestPopovers() {
+  return (
+    <div className="flex flex-col rounded-md border p-2 shadow-md">
+      <span className="p-1 text-xl font-semibold">
+        {/*capitalizeFirstLetter(`${kind!} Popovers`)*/ "Popovers"}
+      </span>
+      <hr className="border-b-1 border-t" />
+      <div className="flex flex-wrap gap-1 px-2 py-1">In Construction</div>
+    </div>
+  );
+}
+
+function TestModals() {
+  return (
+    <div className="flex flex-col rounded-md border p-2 shadow-md">
+      <span className="p-1 text-xl font-semibold">
+        {/*capitalizeFirstLetter(`${kind!} Modals`)*/ "Modals"}
+      </span>
+      <hr className="border-b-1 border-t" />
+      <div className="flex flex-wrap gap-1 px-2 py-1">In Construction</div>
+    </div>
+  );
+}
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <div className="flex flex-col gap-1">
+      <span className="p-1 text-2xl font-bold">Component Showcase</span>
+      <hr className="border-b-1 border-dashed" />
+      {Array.from({ length: 1 }).map((_, i) => (
+        <Fragment key={`Item_${i}`}>
+          <div className="p-2">
+            <TestButtons />
+          </div>
+          <hr className="border-b-1 border-dashed" />
+          <div className="p-2">
+            <TestTabs />
+          </div>
+          <hr className="border-b-1 border-dashed" />
+          <div className="p-2">
+            <TestPopovers />
+          </div>
+          <hr className="border-b-1 border-dashed" />
+          <div className="p-2">
+            <TestModals />
+          </div>
+        </Fragment>
+      ))}
+    </div>
   );
 }
